@@ -3,7 +3,7 @@ server:
     context-path: /api/v1
 spring:
   application:
-    name: inspectpro-backend
+    name: inspectpro
   datasource:
     url: jdbc:postgresql://hip-inspectpro.cxgys808ux3j.ap-south-1.rds.amazonaws.com:5432/inspectpro
     username: ${DB_USERNAME:postgres}
