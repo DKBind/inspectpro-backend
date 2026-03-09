@@ -6,8 +6,8 @@ spring:
     name: inspectpro
   datasource:
     url: jdbc:postgresql://hip-inspectpro.cxgys808ux3j.ap-south-1.rds.amazonaws.com:5432/inspectpro
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:password}
+    username: ${DB_USERNAME:hip_admin}
+    password: ${DB_PASSWORD:Hip#admin#2026}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,12 +16,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://cognito-idp.ap-south-1.amazonaws.com/${COGNITO_USER_POOL_ID}
-          jwk-set-uri: https://cognito-idp.ap-south-1.amazonaws.com/${COGNITO_USER_POOL_ID}/.well-known/jwks.json
+  # security:
+  #   oauth2:
+  #     resourceserver:
+  #       jwt:
+  #         issuer-uri: https://cognito-idp.ap-south-1.amazonaws.com/${COGNITO_USER_POOL_ID}
+  #         jwk-set-uri: https://cognito-idp.ap-south-1.amazonaws.com/${COGNITO_USER_POOL_ID}/.well-known/jwks.json
 
 app:
   security:

@@ -15,8 +15,8 @@ import jakarta.persistence.Table;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
-@Table(name = "roles")
+@Entity(name = "CommonRoles")
+@Table(name = "common_roles")
 public class Roles {
 
     @Id

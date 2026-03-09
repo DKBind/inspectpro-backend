@@ -3,8 +3,6 @@ package com.inspectpro.entities;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.Column;
