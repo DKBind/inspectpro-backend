@@ -1,4 +1,4 @@
-package com.inspectpro.common.dto.request;
+package com.inspectpro.common.request;
 
 public class tempReq {
 
