@@ -1,4 +1,4 @@
-package com.inspectpro.common.dto.response;
+package com.inspectpro.common.response;
 
 public class tempResp {
 
