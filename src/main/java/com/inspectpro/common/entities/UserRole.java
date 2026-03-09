@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "common_user_roles")
+@Table(name = "user_roles")
 public class UserRole {
 
     @Id
@@ -22,6 +22,6 @@ public class UserRole {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Roles role;
+    private Role role;
 
 }

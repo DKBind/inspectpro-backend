@@ -15,18 +15,15 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
-
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
-@Table(name = "common_users")
+@Table(name = "users")
 public class Users {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(strategy = "native", name = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "first_name", columnDefinition = "varchar(50)")
@@ -93,5 +90,9 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private Set<UserRole> roles;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id")
+    private Status status;
 
 }

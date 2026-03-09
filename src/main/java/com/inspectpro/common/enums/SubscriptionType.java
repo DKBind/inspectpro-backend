@@ -1,9 +1,6 @@
 package com.inspectpro.common.enums;
 
-public enum RoleScope {
-
-    PLATFORM,
+public enum SubscriptionType {
     ORGANISATION,
     FRANCHISE
-
 }
