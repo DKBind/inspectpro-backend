@@ -13,7 +13,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
 
-@Entity(name = "CommonOrganisations")
+@Entity
 @Table(name = "common_organisations")
 public class Organisations {
 

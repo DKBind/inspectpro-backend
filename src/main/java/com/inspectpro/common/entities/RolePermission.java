@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity(name = "CommonRolePermission")
+@Entity
 @Table(name = "common_role_permissions")
 public class RolePermission {
 

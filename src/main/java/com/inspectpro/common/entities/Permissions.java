@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity(name = "CommonPermissions")
+@Entity
 @Table(name = "common_permissions")
 public class Permissions {
 

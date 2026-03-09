@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity(name = "CommonUserRole")
+@Entity
 @Table(name = "common_user_roles")
 public class UserRole {
 
