@@ -19,7 +19,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users extends BaseEntityCustom {
 
     @Id
     @Column(name = "id")

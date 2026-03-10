@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 import java.sql.Types;
 import java.time.LocalDateTime;
@@ -15,7 +16,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "organisations")
-public class Organisations {
+@Data
+public class Organisations extends BaseEntityCustom {
 
     @Id
     @Column(name = "id")

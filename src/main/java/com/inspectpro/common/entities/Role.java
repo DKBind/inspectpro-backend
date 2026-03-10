@@ -13,12 +13,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+@Data
+public class Role extends BaseEntityCustom {
 
     @Id
     @Column(name = "role_id")

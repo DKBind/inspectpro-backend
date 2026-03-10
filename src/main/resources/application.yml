@@ -35,3 +35,4 @@ app:
       - /actuator/health
       - /swagger-ui/**
       - /v3/api-docs/**
+      - /api/v1/organisations/**

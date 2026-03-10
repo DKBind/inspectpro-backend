@@ -13,7 +13,7 @@ import lombok.Data;
 
 @Entity
 @Table(name = "module")
-public @Data class Module {
+public @Data class Module extends BaseEntityCustom {
 
     @Id
     @Column(name = "id")
