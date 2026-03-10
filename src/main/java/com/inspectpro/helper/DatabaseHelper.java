@@ -1,10 +1,9 @@
 package com.inspectpro.helper;
 
-import org.springframework.data.domain.Pageable;
-
 import lombok.Data;
 
-public @Data class DatabaseHelper {
+@Data
+public class DatabaseHelper {
 
     private String search;
     private String searchBy;
@@ -12,7 +11,6 @@ public @Data class DatabaseHelper {
     private String sortOrder;
     private int currentPage;
     private int itemsPerPage;
-    private Pageable pageable;
 
     public DatabaseHelper(String search, int currentPage, int itemsPerPage, String sortBy, String sortOrder) {
         this.search = search;
@@ -20,7 +18,6 @@ public @Data class DatabaseHelper {
         this.itemsPerPage = itemsPerPage;
         this.sortBy = sortBy;
         this.sortOrder = sortOrder;
-        HelperExtension.Print(toString());
     }
 
     public DatabaseHelper(String search, String searchBy, int currentPage, int itemsPerPage, String sortBy,
@@ -31,7 +28,6 @@ public @Data class DatabaseHelper {
         this.itemsPerPage = itemsPerPage;
         this.sortBy = sortBy;
         this.sortOrder = sortOrder;
-        HelperExtension.Print(toString());
     }
 
     // Copy Constructor for Pagination
