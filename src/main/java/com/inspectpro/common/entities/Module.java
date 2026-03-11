@@ -18,7 +18,7 @@ public @Data class Module extends BaseEntityCustom {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name", columnDefinition = "varchar(50)")
     private String name;

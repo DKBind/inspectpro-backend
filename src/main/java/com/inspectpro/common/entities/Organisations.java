@@ -7,12 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-
-import java.sql.Types;
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "organisations")
@@ -20,14 +15,13 @@ import org.hibernate.annotations.JdbcTypeCode;
 public class Organisations extends BaseEntityCustom {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "slug")
+    @Column(name = "slug", unique = true)
     private String slug;
 
     @Column(name = "domain")
@@ -38,21 +32,5 @@ public class Organisations extends BaseEntityCustom {
 
     @Column(name = "is_active")
     private Boolean isActive = true;
-
-    @Column(columnDefinition = "jsonb")
-    private String settings;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name = "uuid", unique = true, columnDefinition = "char(36)")
-    @JdbcTypeCode(Types.VARCHAR)
-    private UUID uuid;
-
-    @Column(name = "is_flag", columnDefinition = " int DEFAULT '1'")
-    private int isFlag = 1;
 
 }

@@ -1,11 +1,12 @@
 package com.inspectpro.organisation;
 
 import com.inspectpro.common.request.OrganisationCreateRequest;
+import com.inspectpro.common.request.RequestInterceptorReq;
 import com.inspectpro.common.response.OrganisationResponse;
+import com.inspectpro.config.RequestInterceptor;
 
-import org.springframework.http.HttpStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,10 @@ public class OrganisationController {
     private final OrganisationService organisationService;
 
     @PostMapping
-    public ResponseEntity<OrganisationResponse> createOrganisation(@RequestBody OrganisationCreateRequest request) {
-        OrganisationResponse response = organisationService.createOrganisation(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+    public ResponseEntity<Object> createOrganisation(@RequestInterceptor RequestInterceptorReq req,
+            @RequestBody OrganisationCreateRequest request) {
 
+        String userUuid = req.getUuid();
+        return organisationService.createOrganisation(request, userUuid);
+    }
 }

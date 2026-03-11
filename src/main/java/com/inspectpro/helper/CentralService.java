@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.inspectpro.organisation.OrganisationJPARepo;
+import com.inspectpro.organisation.SubscriptionJPARepo;
+import com.inspectpro.role.CommonOrgRoleJPARepo;
 import com.inspectpro.role.RoleJPARepo;
 import com.inspectpro.user.UserJPARepo;
 
@@ -24,5 +26,11 @@ public class CentralService {
 
     @Autowired
     public OrganisationJPARepo organisationJPARepo;
+
+    @Autowired
+    public CommonOrgRoleJPARepo commonOrgRoleJPARepo;
+
+    @Autowired
+    public SubscriptionJPARepo subscriptionJPARepo;
 
 }

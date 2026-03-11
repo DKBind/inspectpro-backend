@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import com.inspectpro.common.enums.SubscriptionStatus;
-import com.inspectpro.common.enums.SubscriptionType;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,41 +31,20 @@ public class Subscription extends BaseEntityCustom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "subscription_id", updatable = false, nullable = false)
-    private UUID subscriptionId;
+    private UUID id;
 
     /**
-     * WHO this subscription belongs to:
-     * ORGANISATION → org_id of the Organisation
-     * FRANCHISE → org_id of the Franchise
-     * CUSTOMER → org_id of the Franchise (customer belongs to a franchise)
-     */
-    @Column(name = "owner_id", nullable = false)
-    private UUID ownerId;
-
-    /**
-     * WHO created/manages this subscription:
-     * ORGANISATION → NULL (platform/Super Admin, no org_id)
-     * FRANCHISE → org_id of the parent Organisation
-     * CUSTOMER → org_id of the Franchise
+     * null  → top-level organisation (created by admin/developer)
+     * value → franchise organisation (created by this parent org's UUID)
      */
     @Column(name = "created_by_org_id")
     private UUID createdByOrgId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "subscription_type", nullable = false, length = 20)
-    private SubscriptionType subscriptionType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     @Builder.Default
     SubscriptionStatus status = SubscriptionStatus.TRIAL;
 
-    // @Enumerated(EnumType.STRING)
-    // @Column(name = "billing_cycle", nullable = false, length = 20)
-    // @Builder.Default BillingCycle billingCycle = BillingCycle.MONTHLY;
-
-    // @Column(name = "trial_ends_at") private LocalDateTime trialEndsAt;
     @Column(name = "current_period_start")
     private LocalDateTime currentPeriodStart;
 
@@ -78,9 +56,6 @@ public class Subscription extends BaseEntityCustom {
 
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrgSubscription> orgSubscription;
-
-    @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FranchiseSubscription> franchiseSubscription;
 
     // helpers
     public boolean isActive() {

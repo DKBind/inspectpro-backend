@@ -31,23 +31,15 @@ import lombok.NoArgsConstructor;
 public class OrgSubscription extends BaseEntityCustom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Give it its own PK
-    @Column(name = "org_sub_id")
-    private UUID subscriptionId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    /**
-     * WHY @MapsId + @OneToOne:
-     * org_subscriptions.subscription_id IS the FK and also the PK.
-     * This is a shared-primary-key one-to-one relationship.
-     * Avoids a separate surrogate key column in the detail table.
-     * subscription_id = "join key" = the detail row's own PK.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
 
     /** The org this subscription is for (denormalized for easier querying) */
-    @Column(name = "org_id", nullable = false)
+    @Column(name = "org_id")
     private UUID orgId;
 
     /** Which platform plan: FREE, STARTER, PRO, ENTERPRISE */
@@ -64,15 +56,9 @@ public class OrgSubscription extends BaseEntityCustom {
     @Builder.Default
     String currency = "INR";
 
-    /** Max number of franchises this org can create under their plan */
-    @Column(name = "max_franchises")
-    private Integer maxFranchises;
-
-    /** Max total users (across org + all franchises) */
     @Column(name = "max_users")
     private Integer maxUsers;
 
-    /** Notes from Super Admin (internal) */
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 }
