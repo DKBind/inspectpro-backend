@@ -18,4 +18,7 @@ public class ConstantExtension {
     public static final String SUSPENDED = "SUSPENDED";
     public static final String PENDING_SETUP = "PENDING_SETUP";
 
+    public static final long ACTIVE_STATUS_ID = 1;
+    public static final long INACTIVE_STATUS_ID = 2;
+
 }

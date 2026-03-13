@@ -1,10 +1,12 @@
 package com.inspectpro.common.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import com.inspectpro.common.enums.SubscriptionStatus;
-import com.inspectpro.common.enums.SubscriptionType;
+
+import com.inspectpro.common.enums.BillingCycle;
+import com.inspectpro.common.enums.PaymentStatus;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +17,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -32,58 +36,49 @@ public class Subscription extends BaseEntityCustom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "subscription_id", updatable = false, nullable = false)
-    private UUID subscriptionId;
+    private UUID id;
 
     /**
-     * WHO this subscription belongs to:
-     * ORGANISATION → org_id of the Organisation
-     * FRANCHISE → org_id of the Franchise
-     * CUSTOMER → org_id of the Franchise (customer belongs to a franchise)
-     */
-    @Column(name = "owner_id", nullable = false)
-    private UUID ownerId;
-
-    /**
-     * WHO created/manages this subscription:
-     * ORGANISATION → NULL (platform/Super Admin, no org_id)
-     * FRANCHISE → org_id of the parent Organisation
-     * CUSTOMER → org_id of the Franchise
+     * null → top-level organisation (created by admin/developer)
+     * value → franchise organisation (created by this parent org's UUID)
      */
     @Column(name = "created_by_org_id")
     private UUID createdByOrgId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "subscription_type", nullable = false, length = 20)
-    private SubscriptionType subscriptionType;
+    @Column(name = "plan_name", length = 100)
+    private String planName;
+
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "currency", length = 10)
+    private String currency;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 20)
-    @Builder.Default
-    SubscriptionStatus status = SubscriptionStatus.TRIAL;
+    @Column(name = "payment_status", length = 20)
+    private PaymentStatus paymentStatus;
 
-    // @Enumerated(EnumType.STRING)
-    // @Column(name = "billing_cycle", nullable = false, length = 20)
-    // @Builder.Default BillingCycle billingCycle = BillingCycle.MONTHLY;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "billing_cycle", length = 20)
+    private BillingCycle billingCycle;
 
-    // @Column(name = "trial_ends_at") private LocalDateTime trialEndsAt;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+
     @Column(name = "current_period_start")
     private LocalDateTime currentPeriodStart;
 
     @Column(name = "current_period_end")
     private LocalDateTime currentPeriodEnd;
 
-    @Column(name = "cancelled_at")
-    private LocalDateTime cancelledAt;
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
+
+    @Column(name = "duration_months")
+    private Integer durationMonths;
 
     @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrgSubscription> orgSubscription;
 
-    @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FranchiseSubscription> franchiseSubscription;
-
-    // helpers
-    public boolean isActive() {
-        return status == SubscriptionStatus.ACTIVE || status == SubscriptionStatus.TRIAL;
-    }
 }

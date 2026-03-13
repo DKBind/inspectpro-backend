@@ -10,21 +10,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
-import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "users")
 public class Users extends BaseEntityCustom {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "first_name", columnDefinition = "varchar(50)")
     private String firstName;
@@ -37,10 +33,6 @@ public class Users extends BaseEntityCustom {
 
     @Column(name = "email", columnDefinition = "varchar(250)")
     private String email;
-
-    @Column(name = "uuid", unique = true, columnDefinition = "char(36)")
-    @JdbcTypeCode(Types.VARCHAR)
-    private UUID uuid;
 
     @Column(name = "gender", columnDefinition = "varchar(50)")
     private String gender;

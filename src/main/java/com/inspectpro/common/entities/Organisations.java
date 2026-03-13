@@ -1,18 +1,8 @@
 package com.inspectpro.common.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
-
-import java.sql.Types;
-import java.time.LocalDateTime;
 import java.util.UUID;
-
-import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "organisations")
@@ -20,15 +10,14 @@ import org.hibernate.annotations.JdbcTypeCode;
 public class Organisations extends BaseEntityCustom {
 
     @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "slug")
-    private String slug;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "domain")
     private String domain;
@@ -39,20 +28,30 @@ public class Organisations extends BaseEntityCustom {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
-    @Column(columnDefinition = "jsonb")
-    private String settings;
+    // Contact & Identity
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "contacted_person_name")
+    private String contactedPersonName;
 
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    // Tax identifiers
+    @Column(name = "gstin", length = 15)
+    private String gstin;
 
-    @Column(name = "uuid", unique = true, columnDefinition = "char(36)")
-    @JdbcTypeCode(Types.VARCHAR)
-    private UUID uuid;
+    @Column(name = "pan", length = 10)
+    private String pan;
 
-    @Column(name = "is_flag", columnDefinition = " int DEFAULT '1'")
-    private int isFlag = 1;
+    @Column(name = "tan", length = 10)
+    private String tan;
 
+    // Status
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+
+    // Address (one organisation → one address)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private OrganisationAddress address;
 }
