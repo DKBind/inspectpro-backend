@@ -1,11 +1,6 @@
 package com.inspectpro.common.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import java.util.UUID;
 
@@ -21,8 +16,8 @@ public class Organisations extends BaseEntityCustom {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "slug", unique = true)
-    private String slug;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "domain")
     private String domain;
@@ -33,4 +28,30 @@ public class Organisations extends BaseEntityCustom {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    // Contact & Identity
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "contacted_person_name")
+    private String contactedPersonName;
+
+    // Tax identifiers
+    @Column(name = "gstin", length = 15)
+    private String gstin;
+
+    @Column(name = "pan", length = 10)
+    private String pan;
+
+    @Column(name = "tan", length = 10)
+    private String tan;
+
+    // Status
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+
+    // Address (one organisation → one address)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "address_id")
+    private OrganisationAddress address;
 }

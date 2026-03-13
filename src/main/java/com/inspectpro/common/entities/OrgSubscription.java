@@ -1,6 +1,7 @@
 package com.inspectpro.common.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.inspectpro.common.enums.PlanType;
@@ -15,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,10 +42,11 @@ public class OrgSubscription extends BaseEntityCustom {
     @Column(name = "org_id")
     private UUID orgId;
 
-    /** Which platform plan: FREE, STARTER, PRO, ENTERPRISE */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "platform_plan", nullable = false, length = 20)
-    private PlanType platformPlan;
+    /**
+     * Human-readable plan name (e.g. "Free", "Professional"). DB-driven, no enum.
+     */
+    @Column(name = "platform_plan", length = 100)
+    private String platformPlan;
 
     /** What the organisation pays to the platform per billing cycle */
     @Column(name = "platform_price", nullable = false, precision = 10, scale = 2)
@@ -61,4 +62,10 @@ public class OrgSubscription extends BaseEntityCustom {
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
+
+    @Column(name = "period_start")
+    private LocalDateTime periodStart;
+
+    @Column(name = "period_end")
+    private LocalDateTime periodEnd;
 }
